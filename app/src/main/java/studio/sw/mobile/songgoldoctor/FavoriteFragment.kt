@@ -94,8 +94,8 @@ class FavoriteListAdapter(context: Activity,
             viewHolder.phone.setOnClickListener {
                 val intent = Intent(Intent.ACTION_CALL)
                 intent.data = Uri.parse("tel:" + getItem(position).phoneNumber)
-                if (context.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-                    context.startActivity(intent)
+                PermissionManager.checkCallPermission(context as Activity)
+                context.startActivity(intent)
             }
         }else{
             viewHolder = convertView.tag as ViewHolder
