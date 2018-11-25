@@ -3,6 +3,10 @@ package studio.sw.mobile.songgoldoctor
 import android.os.Parcel
 import android.os.Parcelable
 
+/*
+ * BaseParcelable Class
+ * Usage: to pass on ArrayList type through intents
+ */
 class BaseParcelable : Parcelable {
 
     var value: Any

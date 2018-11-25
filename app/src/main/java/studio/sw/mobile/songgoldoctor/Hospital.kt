@@ -1,9 +1,10 @@
 package studio.sw.mobile.songgoldoctor
 
-class Hospital{
-    lateinit var name:String
-    lateinit var phoneNumber:String
-    lateinit var id:String //From google map
+open data class Hospital(
+    var name:String,
+    var phoneNumber:String,
+    var id:String
+){
 
 
 }

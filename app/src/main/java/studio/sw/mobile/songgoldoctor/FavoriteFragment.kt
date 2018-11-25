@@ -12,23 +12,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-class FavoriteFragment:Fragment(){
-    companion object {
-        @JvmStatic private val STATE_FAVORLIST = "favorlist"
-    }
-    private lateinit var listView:ListView
-    private lateinit var rootView:View
-    private lateinit var favorList:ArrayList<Hospital>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                          savedInstanceState: Bundle?): View? {
-        if(savedInstanceState != null){
+class FavoriteFragment : Fragment() {
+    companion object {
+        @JvmStatic
+        private val STATE_FAVORLIST = "favorlist"
+    }
+
+    private lateinit var listView: ListView
+    private lateinit var rootView: View
+    private lateinit var favorList: ArrayList<Hospital>
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (savedInstanceState != null) {
             @Suppress("UNCHECKED_CAST")
             favorList = savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORLIST).value as ArrayList<Hospital>
-        }else favorList = ArrayList<Hospital>()
-        super.onCreate(savedInstanceState)
+        } else favorList = ArrayList<Hospital>()
+        super.onCreateView(inflater, container, savedInstanceState)
 
-        rootView = inflater.inflate(R.layout.fragment_favoritelist, container,false)
+        rootView = inflater.inflate(R.layout.fragment_favoritelist, container, false)
         listView = rootView.findViewById(R.id.favoriteList)
 
         listView.adapter = FavoriteListAdapter(activity as Activity, favorList)
@@ -45,25 +50,24 @@ class FavoriteFragment:Fragment(){
         super.onSaveInstanceState(outState)
     }
 
-    fun test(){
-        val testData = Hospital()
-        //Parse data from json
-        testData.id = "011"
-        testData.name = "haha"
-        testData.phoneNumber = "01036485957"
-
-        favorList.add(testData)
+    private fun test() {
+        repeat(10){
+            favorList.add(DummyData.dummyHospital())
+        }
     }
 }
 
-class FavoriteListAdapter(context: Activity,
-                          private val source:ArrayList<Hospital>):ArrayAdapter<Hospital>(context,0,source){
-    private class ViewHolder{
-        lateinit var name:TextView
-        lateinit var book:TextView
-        lateinit var phone:TextView
+class FavoriteListAdapter(
+    context: Activity,
+    private val source: ArrayList<Hospital>
+) : ArrayAdapter<Hospital>(context, 0, source) {
+    private class ViewHolder {
+        lateinit var name: TextView
+        lateinit var book: TextView
+        lateinit var phone: TextView
     }
-    private val inflater:LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     override fun getCount(): Int {
         return source.size
     }
@@ -97,7 +101,7 @@ class FavoriteListAdapter(context: Activity,
                 PermissionManager.checkCallPermission(context as Activity)
                 context.startActivity(intent)
             }
-        }else{
+        } else {
             viewHolder = convertView.tag as ViewHolder
             view = convertView
         }

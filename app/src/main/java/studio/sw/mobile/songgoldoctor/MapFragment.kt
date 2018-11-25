@@ -27,8 +27,8 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import java.lang.Exception
 
-class MapFragment: Fragment() {
-    private var mMap:GoogleMap? = null
+class MapFragment : Fragment() {
+    private var mMap: GoogleMap? = null
     private lateinit var mMapView: MapView
     private lateinit var mGeoDataClient: GeoDataClient
     private lateinit var mPlaceDetectionClient: PlaceDetectionClient
@@ -36,28 +36,27 @@ class MapFragment: Fragment() {
     private lateinit var mLocationManager: LocationManager
     private lateinit var mPlacePicker: PlacePicker
     private var mCurrentBestLocation: Location? = null
-        set(value) {mCurrentLatLng = locationToLatLng(value)}
-    private var mCurrentLatLng:LatLng? = null
+        set(value) {
+            mCurrentLatLng = locationToLatLng(value)
+        }
+    private var mCurrentLatLng: LatLng? = null
     private lateinit var toFavoriteButton: ImageButton
 
-    private val mDefaultLocation = LatLng(37.597470317773286,126.86515811830759)
+    private val mDefaultLocation = LatLng(37.597470317773286, 126.86515811830759)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (
-            ContextCompat.checkSelfPermission( activity as Activity, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission( activity as Activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {return null}
-        val rootView:View = inflater.inflate(R.layout.fragment_map, container,false)
+        PermissionManager.checkLocationPermission(context as Activity)
+        val rootView: View = inflater.inflate(R.layout.fragment_map, container, false)
         mMapView = rootView.findViewById(R.id.mapView) as MapView
         mMapView.onCreate(savedInstanceState)
         mMap?.isMyLocationEnabled = true
         mMap?.uiSettings?.isMyLocationButtonEnabled = true
 
-        try{
+        try {
             MapsInitializer.initialize(activity?.applicationContext)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -70,7 +69,7 @@ class MapFragment: Fragment() {
         mLocationManager = (activity as Activity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         toFavoriteButton = rootView.findViewById(R.id.toFavoriteButton)
-        toFavoriteButton.setOnClickListener{
+        toFavoriteButton.setOnClickListener {
             val intent = Intent(activity, FavoriteListActivity::class.java)
             startActivity(intent)
         }
@@ -78,7 +77,7 @@ class MapFragment: Fragment() {
         return rootView
     }
 
-    override fun onResume(){
+    override fun onResume() {
         super.onResume()
         mMapView.onResume()
     }
@@ -98,31 +97,39 @@ class MapFragment: Fragment() {
         mMapView.onLowMemory()
     }
 
-    fun getLastBestLocation():Location?{
+    fun getLastBestLocation(): Location? {
         if (
-            ContextCompat.checkSelfPermission( activity as Activity, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission( activity as Activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {return null}
+            ContextCompat.checkSelfPermission(
+                activity as Activity,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                activity as Activity,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return null
+        }
 
         val locationGPS = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         val locationNet = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        val GPSLocationTime:Long = locationGPS?.time ?: 0
-        val NetLocationTime:Long = locationNet?.time ?: 0
+        val GPSLocationTime: Long = locationGPS?.time ?: 0
+        val NetLocationTime: Long = locationNet?.time ?: 0
 
-        if( 0 < GPSLocationTime - NetLocationTime) return locationGPS
+        if (0 < GPSLocationTime - NetLocationTime) return locationGPS
         else return locationNet
     }
 
-    fun locationToLatLng(location:Location?):LatLng?{
-        if(location?.latitude == null || location?.longitude == null) return null
-        else return LatLng(location.latitude,location.longitude)
+    fun locationToLatLng(location: Location?): LatLng? {
+        if (location?.latitude == null || location?.longitude == null) return null
+        else return LatLng(location.latitude, location.longitude)
     }
 
-    inner class OnMapReadyCallBackHandler(private var googleMap: GoogleMap?):OnMapReadyCallback{
+    inner class OnMapReadyCallBackHandler(private var googleMap: GoogleMap?) : OnMapReadyCallback {
         override fun onMapReady(map: GoogleMap?) {
             mCurrentLatLng = mDefaultLocation
             mMap = map
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng,16f))
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 16f))
         }
     }
 }
