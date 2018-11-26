@@ -36,6 +36,12 @@
                 <category android:name="android.intent.category.INFO"/>
             </intent-filter>
         </activity>
+        <activity android:name=".DiagnosisActivity">
+            <intent-filter>
+            <action android:name="android.intent.action.RUN"/>
+            <category android:name="android.intent.category.INFO"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

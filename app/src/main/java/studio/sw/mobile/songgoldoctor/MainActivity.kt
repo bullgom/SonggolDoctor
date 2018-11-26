@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         val pagerAdapter = PagerAdapter(supportFragmentManager,
             arrayListOf(MapFragment(),
-                        DiagnosisFragment(),
                         BookFragment(),
+                        DiagnosisFragment(),
                         InfoFragment()))
         viewPager.adapter = pagerAdapter
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))

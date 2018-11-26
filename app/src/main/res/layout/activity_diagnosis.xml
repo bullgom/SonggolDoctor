@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+
+    <TextView
+            android:text="hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/diag_act_hospital" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/diag_act_date"
+            android:layout_marginStart="8dp"
+            android:textSize="20sp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/diag_act_comment"/>
+    <TextView
+            android:text="notEnoughMinerals"
+            android:layout_width="284dp"
+            android:layout_height="408dp"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/diag_act_comment" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/diag_act_backButton"/>
+    <TextView
+            android:text="1010"
+            android:layout_width="114dp"
+            android:layout_height="24dp"
+            android:textSize="20sp"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/diag_act_date" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/diag_act_backButton" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/diag_act_comment"/>
+    <TextView
+            android:text="drugName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/diag_act_drug" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/diag_act_comment"
+            android:layout_marginEnd="8dp"
+            android:textSize="20sp"/>
+    <TextView
+            android:text="howMany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/diag_act_howMany"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/diag_act_comment"
+            android:textSize="20sp" app:layout_constraintStart_toEndOf="@+id/diag_act_drug"
+            android:layout_marginStart="8dp"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_revert"
+            android:id="@+id/diag_act_backButton"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+</android.support.constraint.ConstraintLayout>
