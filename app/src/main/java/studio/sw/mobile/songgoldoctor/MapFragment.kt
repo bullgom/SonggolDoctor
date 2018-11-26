@@ -47,6 +47,7 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         PermissionManager.checkLocationPermission(context as Activity)
         val rootView: View = inflater.inflate(R.layout.fragment_map, container, false)
         mMapView = rootView.findViewById(R.id.mapView) as MapView
@@ -56,11 +57,9 @@ class MapFragment : Fragment() {
 
         try {
             MapsInitializer.initialize(activity?.applicationContext)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        } catch (e: Exception) {e.printStackTrace()}
 
-        mMapView.getMapAsync(OnMapReadyCallBackHandler(mMap))
+        mMapView.getMapAsync(OnMapReadyCallBackHandler())
         //GeoDataClient provides access to Google's database of local place and business info
         mGeoDataClient = Places.getGeoDataClient(activity as Activity)
         //PlaceDetectionClient provides quick access to the device's current location
@@ -125,7 +124,7 @@ class MapFragment : Fragment() {
         else return LatLng(location.latitude, location.longitude)
     }
 
-    inner class OnMapReadyCallBackHandler(private var googleMap: GoogleMap?) : OnMapReadyCallback {
+    inner class OnMapReadyCallBackHandler : OnMapReadyCallback {
         override fun onMapReady(map: GoogleMap?) {
             mCurrentLatLng = mDefaultLocation
             mMap = map

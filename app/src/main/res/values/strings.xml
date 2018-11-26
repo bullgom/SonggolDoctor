@@ -8,4 +8,9 @@
     <string name="recent_hospital">최근</string>
     <string name="book"><u>예약하기</u></string>
     <string name="call"><u>전화하기</u></string>
+    <string name="hospitalName">병원이름</string>
+    <string name="hospitalAddress">특별택시 마구마구 포장도로 104</string>
+    <string name="worktime">진료시간</string>
+    <string name="weekday">예, 시, 요, 일</string>
+    <string name="worktimeexample">12:00 ~ 15:00</string>
 </resources>

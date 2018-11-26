@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import java.io.Serializable
 
 class FavoriteFragment : Fragment() {
     companion object {
@@ -39,6 +40,7 @@ class FavoriteFragment : Fragment() {
         listView.adapter = FavoriteListAdapter(activity as Activity, favorList)
         listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val intent = Intent(context, HospitalActivity::class.java)
+            intent.putExtra(HOSPITAL_OBJECT,favorList[position])
             startActivity(intent)
         }
         test()
@@ -85,7 +87,7 @@ class FavoriteListAdapter(
         val view: View
 
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.favorite_list_item, null)
+            view = inflater.inflate(R.layout.favorite_list_item, null)
             viewHolder = ViewHolder()
             viewHolder.name = view.findViewById(R.id.hospital_name)
             viewHolder.name.text = (getItem(position) as Hospital).name
