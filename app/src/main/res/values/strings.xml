@@ -8,4 +8,7 @@
     <string name="recent_hospital">최근</string>
     <string name="book"><u>예약하기</u></string>
     <string name="call"><u>전화하기</u></string>
+    <string name="drugAdvice"><u>처방전</u></string>
+    <string name="commentAdvice"><u>의사 코멘트</u></string>
+    <string name="diagnosisText"><u>진료 기록</u></string>
 </resources>

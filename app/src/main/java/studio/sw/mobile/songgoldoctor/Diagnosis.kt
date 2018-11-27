@@ -10,6 +10,7 @@ class Diagnosis(
     val date: Date,
     val hospital: String,
     val department: Department,
+
     val medicine: String,
     val diseaseName: String,
     val diagnosisType: DiagnosisType,
@@ -56,3 +57,4 @@ class Diagnosis(
         }
     }
 }
+

@@ -81,7 +81,7 @@ class DiagnosisFragment : Fragment() {
                 viewHolder = ViewHolder()
                 viewHolder.txtDate = view.findViewById(R.id.diagnosis_date)
                 viewHolder.txtHospital = view.findViewById(R.id.diagnosis_hospital)
-                viewHolder.txtDate?.text = "${getItem(position).date.getMonth()}/${getItem(position).date.getDay()}"
+                viewHolder.txtDate?.text = "${getItem(position).date.getMonth()}/${getItem(position).date.getDate()}"
                 viewHolder.txtHospital?.text = getItem(position).hospital
             } else {
                 view = convertView
