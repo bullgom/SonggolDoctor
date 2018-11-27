@@ -11,4 +11,5 @@
     <string name="drugAdvice"><u>처방전</u></string>
     <string name="commentAdvice"><u>의사 코멘트</u></string>
     <string name="diagnosisText"><u>진료 기록</u></string>
+    <string name="actionDial"><u>전화 걸기</u></string>
 </resources>
