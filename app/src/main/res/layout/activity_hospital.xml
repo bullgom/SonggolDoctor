@@ -54,18 +54,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/hospital_activity_linesperator"
                     app:layout_constraintStart_toStartOf="parent" android:textSize="14sp"
                     android:layout_marginStart="8dp" android:textStyle="bold"/>
-            <TableLayout
+            <GridView
                     android:id="@+id/hospital_activity_tablelayout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:stretchMode="columnWidth"
                     android:layout_marginTop="14dp"
                     android:numColumns="2"
                     app:layout_constraintTop_toBottomOf="@+id/hospital_activity_text_worktime"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            >
-
-            </TableLayout>
-
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

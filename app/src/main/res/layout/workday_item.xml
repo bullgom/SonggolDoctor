@@ -7,7 +7,7 @@
                                                  android:layout_height="wrap_content"
                                                  app:layout_constraintTop_toTopOf="parent"
                                                  app:layout_constraintStart_toStartOf="parent">
-        <view android:layout_width="4dp"
+        <View android:layout_width="4dp"
               android:layout_height="55dp"
               android:background="@android:color/black"
               android:id="@+id/workday_item_lineseperator"

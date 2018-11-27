@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.GridView
-import android.widget.TableLayout
-import android.widget.TextView
+import android.widget.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import java.lang.Exception
+import android.widget.GridView
+
+
 
 class HospitalActivity : Activity() {
     inner class WorkDayHolder {
@@ -21,14 +21,13 @@ class HospitalActivity : Activity() {
     }
 
     private var mMap: GoogleMap? = null
-    private var workDayList = ArrayList<WorkDayHolder>()
     private lateinit var hospital: Hospital
     private lateinit var mMapView: MapView
     private lateinit var mCurrentLatLng: LatLng
     private lateinit var mHospitalNameView: TextView
     private lateinit var mHospitalAddressView: TextView
-    private lateinit var mHospitalWorkTimeTableLayout: TableLayout
-    private lateinit var mTableAdapter: ArrayAdapter<WorkDayHolder>
+    private lateinit var mGridLayout: GridView
+    private lateinit var mGridLayoutAdapter: HospitalActivityTableAdapter
     private val mDefaultLocation = LatLng(37.597470317773286, 126.86515811830759)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,26 +42,45 @@ class HospitalActivity : Activity() {
         }
         mMapView.getMapAsync(OnMapReadyCallBackHandler())
         hospital = intent.getParcelableExtra(HOSPITAL_OBJECT)
-        for (from in hospital.workDays) {
-            for (to in workDayList) {
-                if (from.workTimes == to.workTimes)
-                    to.days.add(from.dayOfWeek)
-                else {
-                    val newEntry = WorkDayHolder()
-                    newEntry.days.add(from.dayOfWeek)
-                    newEntry.workTimes = from.workTimes
-                }
-            }
-        }
+
         mHospitalNameView = findViewById(R.id.hospital_activity_hospital_name)
         mHospitalNameView.text = hospital.name
         mHospitalAddressView = findViewById(R.id.hospital_activity_hospital_address)
         mHospitalAddressView.text = hospital.address
-        mHospitalWorkTimeTableLayout = findViewById(R.id.hospital_activity_tablelayout)
-        mTableAdapter = HospitalActivityTableAdapter(this, workDayList)
-        for (i: Int in 0..mTableAdapter.count) {
-            mHospitalWorkTimeTableLayout.addView(mTableAdapter.getView(i, null, mHospitalWorkTimeTableLayout))
+//        mHospitalWorkTimeTableLayout = findViewById(R.id.hospital_activity_tablelayout)
+//        mTableAdapter = HospitalActivityTableAdapter(this, workDayList)
+//        for (i: Int in 0 until mTableAdapter.count)
+//            mHospitalWorkTimeTableLayout.addView(mTableAdapter.getView(i, null, mHospitalWorkTimeTableLayout))
+        mGridLayout = findViewById(R.id.hospital_activity_tablelayout)
+        mGridLayoutAdapter = HospitalActivityTableAdapter(this, hospital.workDays)
+        mGridLayout.adapter = mGridLayoutAdapter
+        setGridViewHeightBasedOnChildren(mGridLayout,2)
+
+    }
+    private fun setGridViewHeightBasedOnChildren(gridView: GridView, columns: Int) {
+        val listAdapter = gridView.adapter
+            ?: // pre-condition
+            return
+
+        var totalHeight = 0
+        val items = listAdapter.count
+        var rows = 0
+
+        val listItem = listAdapter.getView(0, null, gridView)
+        listItem.measure(0, 0)
+        totalHeight = listItem.measuredHeight
+
+        var x = 1f
+        if (items > columns) {
+            x = (items / columns).toFloat()
+            rows = (x + 1).toInt()
+            totalHeight *= rows
         }
+
+        val params = gridView.layoutParams
+        params.height = totalHeight
+        gridView.layoutParams = params
+
     }
 
     inner class OnMapReadyCallBackHandler : OnMapReadyCallback {
@@ -75,9 +93,9 @@ class HospitalActivity : Activity() {
 
     class HospitalActivityTableAdapter(
         context: Activity,
-        val workdays: ArrayList<HospitalActivity.WorkDayHolder>
+        val workdays: ArrayList<WorkDay>
     ) :
-        ArrayAdapter<HospitalActivity.WorkDayHolder>(context, 0, workdays) {
+        ArrayAdapter<WorkDay>(context, 0, workdays) {
         private class ViewHolder {
             lateinit var seperator: View
             lateinit var weekDays: TextView
@@ -91,7 +109,7 @@ class HospitalActivity : Activity() {
             return workdays.size
         }
 
-        override fun getItem(position: Int): WorkDayHolder {
+        override fun getItem(position: Int): WorkDay {
             return workdays[position]
         }
 
@@ -105,30 +123,31 @@ class HospitalActivity : Activity() {
             if (parent == null) return null
 
             if (convertView == null) {
-                //TODO(여기 에러난거 고치기
-                // TODO(Caused by: android.view.InflateException: Binary XML file line #10: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference)
                 view = inflater.inflate(R.layout.workday_item, null)
                 viewHolder = ViewHolder()
                 viewHolder.seperator = view.findViewById(R.id.workday_item_lineseperator)
-                var workTime = Time(0, 0)
-                for (i in workdays[position].workTimes) {
-                    workTime += i.end - i.start
-                    if (workTime > Time(5, 0))
-                        viewHolder.seperator.setBackgroundColor(parent.resources.getColor(R.color.colorBlue))
-                    else viewHolder.seperator.setBackgroundColor(parent.resources.getColor(R.color.colorRed))
-                }
+                if(workdays[position].dayOfWeek in arrayOf(Week.Saturday, Week.Sunday, Week.Holiday))
+                    viewHolder.seperator.setBackgroundColor(parent.resources.getColor(R.color.colorRed))
+                else viewHolder.seperator.setBackgroundColor(parent.resources.getColor(R.color.colorBlue))
                 viewHolder.weekDays = view.findViewById(R.id.workday_item_day)
-                viewHolder.weekDays.text = getItem(position).days.toString()
+                viewHolder.weekDays.text = getItem(position).dayOfWeek.toString()
                 viewHolder.workTime = view.findViewById(R.id.workday_item_time)
-                viewHolder.workTime.text = getItem(position).workTimes.toString()
+                viewHolder.workTime.text = workTimesToString(getItem(position).workTimes)
             } else {
-                viewHolder = convertView.tag as ViewHolder
                 view = convertView
             }
             return view
         }
 
-
+        fun workTimesToString(workTImes:ArrayList<WorkTime>):String{
+            var result:String = ""
+            val iterator = workTImes.listIterator()
+            while(iterator.hasNext()){
+                result += iterator.next()
+                if(iterator.hasNext()) result += ", "
+            }
+            return result
+        }
     }
 }
 

@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlin.math.abs
+import kotlin.math.min
 
 
 enum class Department { AnE, Anaesthetics, Cardiology,
@@ -19,17 +20,51 @@ enum class Gender { Male, Female }
 enum class Week { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Holiday }
 @Parcelize
 class Time(var hour:Int, var minute:Int):Comparable<Time>,Parcelable{
+    fun equals(other: Time):Boolean{
+        return (hour == other.hour && minute == other.minute)
+    }
     operator fun plus(other: Time): Time {
-        return Time(other.hour + hour,other.minute + minute)
+        var nHour = hour + other.hour
+        var nMinute = minute + other.minute
+        when{
+            nHour >= 24 -> nHour = 0
+            nHour < 0 -> nHour = 0
+        }
+        when{
+            nMinute >= 60 -> {
+                nHour += 1
+                nMinute = 0
+            }
+            nMinute <= 0 -> {
+                nHour -= 1
+                nMinute = 60 - nMinute
+            }
+        }
+        return Time(nHour, nMinute)
     }
     operator fun minus(other: Time):Time{
-        return Time( hour - other.hour, minute - other.minute)
+        var nHour = hour - other.hour
+        var nMinute = minute - other.minute
+        when{
+            nHour >= 24 -> nHour = 0
+            nHour < 0 -> nHour = 0
+        }
+        when{
+            nMinute >= 60 -> {
+                nHour += 1
+                nMinute = 0
+            }
+            nMinute <= 0 -> {
+                nHour -= 1
+                nMinute = 60 - nMinute
+            }
+        }
+        return Time(nHour, nMinute)
     }
     override operator fun compareTo(other: Time) = when{
         hour != other.hour -> hour - other.hour
         else -> minute - other.minute
     }
-
     override fun toString(): String {
         return hour.toString()+":"+minute.toString()
     }
@@ -38,6 +73,13 @@ class Time(var hour:Int, var minute:Int):Comparable<Time>,Parcelable{
 class WorkTime(val start: Time, val end: Time):Parcelable{
     override fun toString(): String {
         return start.toString()+"~"+end.toString()
+    }
+    fun getLength():Time{
+        return end - start
+    }
+
+    fun equals(other: WorkTime): Boolean {
+        return(start.equals(other.start) && end.equals(other.end))
     }
 }
 @Parcelize
