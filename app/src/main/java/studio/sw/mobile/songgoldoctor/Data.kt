@@ -1,11 +1,7 @@
 package studio.sw.mobile.songgoldoctor
 
-import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import kotlin.math.abs
-import kotlin.math.min
-
 
 enum class Department { AnE, Anaesthetics, Cardiology,
     Chaplaincy, CriticalCare, DiagnosticImaging, ENT,

@@ -1,24 +1,17 @@
 package studio.sw.mobile.songgoldoctor
 
-import android.Manifest
 import android.app.Activity
 import android.support.v4.app.Fragment
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import java.io.Serializable
 
 class FavoriteFragment : Fragment() {
-    companion object {
-        @JvmStatic
-        private val STATE_FAVORLIST = "favorlist"
-    }
 
     private lateinit var listView: ListView
     private lateinit var rootView: View
@@ -30,7 +23,7 @@ class FavoriteFragment : Fragment() {
     ): View? {
         if (savedInstanceState != null) {
             @Suppress("UNCHECKED_CAST")
-            favorList = savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORLIST).value as ArrayList<Hospital>
+            favorList = savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORITE_LIST).value as ArrayList<Hospital>
         } else favorList = ArrayList<Hospital>()
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -48,7 +41,7 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable(STATE_FAVORLIST, BaseParcelable(favorList))
+        outState.putParcelable(STATE_FAVORITE_LIST, BaseParcelable(favorList))
         super.onSaveInstanceState(outState)
     }
 
@@ -109,6 +102,4 @@ class FavoriteListAdapter(
         }
         return view
     }
-
-
 }
