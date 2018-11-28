@@ -48,7 +48,7 @@ class DiagnosisFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_diagnosis, container, false)
         listView = rootView.findViewById(R.id.diagnosisList)
 
-        test()
+        test2()
         listView.adapter = DiagnosisAdapter(activity as Activity, diagList)
         listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val intent = Intent(context, DiagnosisActivity::class.java)
@@ -63,6 +63,12 @@ class DiagnosisFragment : Fragment() {
         repeat(10) {
             diagList.add(DummyData.dummyDiagnosis())
         }
+    }
+
+    private fun test2()
+    {
+        diagList.add(DummyData.showDummyDiagnosis1())
+        diagList.add(DummyData.showDummyDiagnosis2())
     }
 
     class DiagnosisAdapter(private var activity: Activity, private var items: ArrayList<Diagnosis>) :
