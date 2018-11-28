@@ -33,5 +33,15 @@ class DummyData {
             return Diagnosis(generateText(10), dummyDate(), generateText(10), Department.AnE,generateText(10), generateText(10) , DiagnosisType.Estimation,
                 dummyDate(), dummyDate(), generateText(10), Random().nextInt(3) + 1)
         }
+
+        fun showDummyDiagnosis1(): Diagnosis {
+            return Diagnosis(generateText(10), Date(2017,3,10), "크리스탈병원", Department.AnE, "마데카솔", generateText(10) , DiagnosisType.Estimation,
+                dummyDate(), dummyDate(), "심각한 외상", 2)
+        }
+
+        fun showDummyDiagnosis2(): Diagnosis {
+            return Diagnosis(generateText(10), Date(2017,11,24), "송골병원", Department.AnE, "발모제", generateText(10) , DiagnosisType.Estimation,
+                dummyDate(), dummyDate(), "탈모", 2)
+        }
     }
 }
