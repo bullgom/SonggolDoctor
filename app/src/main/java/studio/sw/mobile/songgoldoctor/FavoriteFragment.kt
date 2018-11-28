@@ -47,7 +47,7 @@ class FavoriteFragment : Fragment() {
 
     private fun test() {
         repeat(10){
-            favorList.add(DummyData.dummyHospital())
+            favorList.add(DummyData.BeautifulHospital())
         }
     }
 }
@@ -86,7 +86,7 @@ class FavoriteListAdapter(
             viewHolder.name.text = (getItem(position) as Hospital).name
             viewHolder.book = view.findViewById(R.id.hostpital_book)
             viewHolder.book.setOnClickListener {
-                val intent = Intent(context, HospitalActivity::class.java)
+                val intent = Intent(context, BookActivity::class.java)
                 context.startActivity(intent)
             }
             viewHolder.phone = view.findViewById(R.id.hospital_call)

@@ -38,6 +38,7 @@ class RecentFragment : Fragment() {
         listView.adapter = RecentListAdapter(activity as Activity, recentList)
         listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val intent = Intent(context, HospitalActivity::class.java)
+            intent.putExtra(HOSPITAL_OBJECT,recentList[position])
             startActivity(intent)
         }
         test()
@@ -93,9 +94,9 @@ class RecentListAdapter(
             }
             viewHolder.phone = view.findViewById(R.id.hospital_call)
             viewHolder.phone.setOnClickListener {
+                PermissionManager.checkCallPermission(context as Activity)
                 val intent = Intent(Intent.ACTION_CALL)
                 intent.data = Uri.parse("tel:" + getItem(position).phoneNumber)
-                PermissionManager.checkCallPermission(context as Activity)
                 context.startActivity(intent)
             }
         } else {

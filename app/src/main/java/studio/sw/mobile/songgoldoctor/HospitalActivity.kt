@@ -29,7 +29,7 @@ class HospitalActivity : Activity() {
         mMapView = findViewById(R.id.hospital_activity_mapview)
         mMapView.onCreate(savedInstanceState)
         try {
-            MapsInitializer.initialize(this.applicationContext)
+            MapsInitializer.initialize(applicationContext)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -75,7 +75,7 @@ class HospitalActivity : Activity() {
         override fun onMapReady(map: GoogleMap?) {
             mCurrentLatLng = mDefaultLocation
             mMap = map
-            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 16f))
+            mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(hospital.position, 16f))
         }
     }
 }

@@ -18,16 +18,16 @@ class MainActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
 
-        tabLayout.addTab(tabLayout.newTab().setText("Map"))
-        tabLayout.addTab(tabLayout.newTab().setText("Book"))
-        tabLayout.addTab(tabLayout.newTab().setText("Diagnosis"))
-        tabLayout.addTab(tabLayout.newTab().setText("Info"))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_hospital))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_book))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_diagnosis))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_myinfo))
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
         val pagerAdapter = PagerAdapter(supportFragmentManager,
             arrayListOf(MapFragment(),
-                        DiagnosisFragment(),
                         BookFragment(),
+                        DiagnosisFragment(),
                         InfoFragment()))
         viewPager.adapter = pagerAdapter
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))

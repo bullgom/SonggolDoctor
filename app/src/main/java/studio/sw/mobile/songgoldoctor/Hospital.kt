@@ -4,11 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
-import java.sql.Time
 
 @Parcelize
-class Hospital(
+data class Hospital(
     var name:String,
     var phoneNumber:String,
     var id:String,

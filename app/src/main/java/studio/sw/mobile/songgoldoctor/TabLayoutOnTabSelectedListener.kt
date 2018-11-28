@@ -13,6 +13,6 @@ class TabLayoutOnTabSelectedListener(val viewPager: ViewPager?):TabLayout.OnTabS
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        viewPager?.currentItem = tab!!.position
+        viewPager?.currentItem = if(tab==null) 0 else tab.position
     }
 }

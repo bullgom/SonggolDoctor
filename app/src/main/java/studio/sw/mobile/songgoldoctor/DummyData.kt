@@ -21,8 +21,9 @@ class DummyData {
                 .joinToString("")
             return string
         }
+
         @JvmStatic
-        fun generateWeek():Week{
+        fun generateWeek(): Week {
             val weeks = arrayListOf<Week>(
                 Week.Friday, Week.Holiday, Week.Monday,
                 Week.Saturday, Week.Sunday, Week.Thursday,
@@ -30,22 +31,25 @@ class DummyData {
             )
             return weeks[Random().nextInt(weeks.size)]
         }
+
         @JvmStatic
-        fun normalWorkTime():ArrayList<WorkTime>{
+        fun normalWorkTime(): ArrayList<WorkTime> {
             val workTimes = ArrayList<WorkTime>()
-            workTimes.add(WorkTime(Time(9,0),Time(12,0)))
-            workTimes.add(WorkTime(Time(13,30),Time(18,0)))
+            workTimes.add(WorkTime(Time(9, 0), Time(12, 0)))
+            workTimes.add(WorkTime(Time(13, 30), Time(18, 0)))
             return workTimes
         }
+
         @JvmStatic
-        fun shortWorkTime():ArrayList<WorkTime>{
+        fun shortWorkTime(): ArrayList<WorkTime> {
             val workTimes = ArrayList<WorkTime>()
-            workTimes.add(WorkTime(Time(10,0),Time(12,0)))
-            workTimes.add(WorkTime(Time(13,30),Time(17,0)))
+            workTimes.add(WorkTime(Time(10, 0), Time(12, 0)))
+            workTimes.add(WorkTime(Time(13, 30), Time(17, 0)))
             return workTimes
         }
+
         @JvmStatic
-        fun generateWorkDays():ArrayList<WorkDay>{
+        fun generateWorkDays(): ArrayList<WorkDay> {
             val workDays = ArrayList<WorkDay>()
             workDays.add(WorkDay(Week.Monday, normalWorkTime()))
             workDays.add(WorkDay(Week.Tuesday, normalWorkTime()))
@@ -55,8 +59,9 @@ class DummyData {
             workDays.add(WorkDay(Week.Saturday, shortWorkTime()))
             return workDays
         }
+
         @JvmStatic
-        fun generateDepartments():ArrayList<Department>{
+        fun generateDepartments(): ArrayList<Department> {
             val deps = arrayListOf(
                 Department.AnE,
                 Department.Anaesthetics,
@@ -73,37 +78,87 @@ class DummyData {
                 Department.Neurology
             )
             val value = ArrayList<Department>()
-            repeat(6){
+            repeat(6) {
                 val department = deps[Random().nextInt(deps.size)]
-                if(department !in value){
+                if (department !in value) {
                     value.add(department)
                 }
             }
             return value
         }
+
         @JvmStatic
-        fun IntRangeRandom(start:Int, endInclusive:Int):Int{
-            return Random().nextInt((endInclusive + 1) - start)+  start
-        }
-        @JvmStatic
-        fun DoubleRangeRandom(start:Double, endInclusive:Double):Double{
-            return start + (endInclusive - start) * Random().nextDouble()
+        fun IntRangeRandom(start: Int, endInclusive: Int): Int {
+            return Random().nextInt((endInclusive + 1) - start) + start
         }
 
         @JvmStatic
+        fun DoubleRangeRandom(start: Double, endInclusive: Double): Double {
+            return start + (endInclusive - start) * Random().nextDouble()
+        }
+        @JvmStatic
+        fun BeautifulHospital():Hospital{
+            val nameArray = arrayOf("행복병원", "송골병원", "항공병원", "공대병원")
+            val addressArray = arrayOf("특별택시 마구마구 포장도로 104", "파주시 강동구 을지3로 451-5")
+            val phoneArray = arrayOf("01045680975","024568839","03182822952")
+            val idArray = arrayOf("01","02","03","04")
+            val position = LatLng(
+                DummyData.DoubleRangeRandom(
+                    37.59, 37.6
+                ),
+                DummyData.DoubleRangeRandom(
+                    126.86, 126.87
+                ))
+            val workDays  = generateWorkDays()
+            val departments = generateDepartments()
+            return Hospital(
+                nameArray[Random().nextInt(nameArray.size)],
+                phoneArray[Random().nextInt(phoneArray.size)],
+                idArray[Random().nextInt(idArray.size)],
+                addressArray[Random().nextInt(addressArray.size)],
+                position,
+                workDays,
+                departments
+            )
+        }
+        @JvmStatic
         fun dummyHospital(): Hospital {
-            return Hospital(generateText(10),
+            return Hospital(
+                generateText(10),
                 generateText(10),
                 Random().ints(10).toString(),
                 generateText(15),
                 LatLng(
                     DummyData.DoubleRangeRandom(
-                        37.59,37.6),
+                        37.59, 37.6
+                    ),
                     DummyData.DoubleRangeRandom(
-                        126.86, 126.87)),
+                        126.86, 126.87
+                    )
+                ),
                 generateWorkDays(),
                 generateDepartments()
 
+            )
+        }
+
+        fun dummyDate(): Date {
+            return Date(Random().nextInt(19) + 2000, Random().nextInt(12) + 1, Random().nextInt(28) + 1)
+        }
+
+        fun dummyDiagnosis(): Diagnosis {
+            return Diagnosis(
+                generateText(10),
+                dummyDate(),
+                generateText(10),
+                Department.AnE,
+                generateText(10),
+                generateText(10),
+                DiagnosisType.Estimation,
+                dummyDate(),
+                dummyDate(),
+                generateText(10),
+                Random().nextInt(3) + 1
             )
         }
     }
