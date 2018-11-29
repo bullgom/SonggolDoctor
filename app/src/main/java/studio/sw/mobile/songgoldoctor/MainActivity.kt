@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = pagerAdapter
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(TabLayoutOnTabSelectedListener(viewPager))
+
+
+        DataCommunication().execute("/hosp/test");
     }
 
 
