@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.view.WindowManager
 
 class MainActivity : AppCompatActivity() {
-    val permissionManager = PermissionManager(this)
+    private val permissionManager = PermissionManager(this)
     lateinit var tabLayout:TabLayout
     lateinit var viewPager: ViewPager
 
@@ -33,6 +34,4 @@ class MainActivity : AppCompatActivity() {
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(TabLayoutOnTabSelectedListener(viewPager))
     }
-
-
 }

@@ -76,6 +76,7 @@ class HospitalActivity : Activity() {
             mCurrentLatLng = mDefaultLocation
             mMap = map
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(hospital.position, 16f))
+            mMapView.onResume()
         }
     }
 }
