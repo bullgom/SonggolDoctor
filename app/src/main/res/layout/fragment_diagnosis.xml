@@ -17,7 +17,7 @@
             android:id="@+id/diagnosisList"/>
     <TextView
             android:text="@string/diagnosisText"
-            android:textSize="18sp"
+            android:textSize="30sp"
             android:layout_gravity="top|center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/diagnosisText"/>

@@ -12,4 +12,10 @@
     <string name="commentAdvice"><u>의사 코멘트</u></string>
     <string name="diagnosisText"><u>진료 기록</u></string>
     <string name="actionDial"><u>전화 걸기</u></string>
+    <string name="login"><u>로그인</u></string>
+    <string name="ID"><u>아이디</u></string>
+    <string name="password"><u>비밀번호</u></string>
+    <string name="save"><u>저장</u></string>
+    <string name="signin"><u>회원가입</u></string>
+    <string name="songgolDoctor"><u>송골닥터</u></string>
 </resources>
