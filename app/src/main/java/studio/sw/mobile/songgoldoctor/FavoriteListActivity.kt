@@ -3,7 +3,6 @@ package studio.sw.mobile.songgoldoctor
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
-import android.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageButton
 
@@ -17,7 +16,7 @@ class FavoriteListActivity:AppCompatActivity(){
 
         tabLayout = findViewById(R.id.favoriteTabLayout)
         viewPager = findViewById(R.id.favoriteViewPager)
-        backButton = findViewById(R.id.favoriteBackButton)
+        backButton = findViewById(R.id.book_activity_back_button)
 
         backButton.setOnClickListener{
             finish()

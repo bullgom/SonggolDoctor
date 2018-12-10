@@ -2,6 +2,8 @@ package studio.sw.mobile.songgoldoctor
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,8 @@ class HospitalActivity : Activity() {
     private lateinit var mHospitalAddressView: TextView
     private lateinit var mGridLayout: GridView
     private lateinit var mGridLayoutAdapter: HospitalActivityTableAdapter
+    private lateinit var mBookButton:Button
+    private lateinit var mPhoneButton:Button
     private val mDefaultLocation = LatLng(37.597470317773286, 126.86515811830759)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,19 @@ class HospitalActivity : Activity() {
         mGridLayoutAdapter = HospitalActivityTableAdapter(this, hospital.workDays)
         mGridLayout.adapter = mGridLayoutAdapter
         setGridViewHeightBasedOnChildren(mGridLayout,2)
+        mBookButton = findViewById(R.id.hospital_activity_book_button)
+        mBookButton.setOnClickListener {
+            val intent = Intent(this, BookActivity::class.java)
+            intent.putExtra(HOSPITAL_OBJECT,hospital)
+            startActivity(intent)
+        }
+        mPhoneButton = findViewById(R.id.hospital_activity_phone_button)
+        mPhoneButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_CALL)
+            intent.data = Uri.parse("tel:" + hospital.phoneNumber)
+            PermissionManager.checkCallPermission(this)
+            startActivity(intent)
+        }
     }
     private fun setGridViewHeightBasedOnChildren(gridView: GridView, columns: Int) {
         val listAdapter = gridView.adapter
@@ -122,7 +139,7 @@ class HospitalActivityTableAdapter(
             viewHolder.weekDays = view.findViewById(R.id.workday_item_day)
             viewHolder.weekDays.text = getItem(position).dayOfWeek.toString()
             viewHolder.workTime = view.findViewById(R.id.workday_item_time)
-            viewHolder.workTime.text = workTimesToString(getItem(position).workTimes)
+            viewHolder.workTime.text = getItem(position).workTime.toString()
         } else view = convertView
 
         return view

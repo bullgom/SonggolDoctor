@@ -31,32 +31,24 @@ class DummyData {
             )
             return weeks[Random().nextInt(weeks.size)]
         }
-
         @JvmStatic
-        fun normalWorkTime(): ArrayList<WorkTime> {
-            val workTimes = ArrayList<WorkTime>()
-            workTimes.add(WorkTime(Time(9, 0), Time(12, 0)))
-            workTimes.add(WorkTime(Time(13, 30), Time(18, 0)))
-            return workTimes
+        fun generateStatus():Status{
+            val status = arrayListOf<Status>(
+                Status.Accepted,
+                Status.Declined,
+                Status.None
+            )
+            return status[Random().nextInt(status.size)]
         }
-
-        @JvmStatic
-        fun shortWorkTime(): ArrayList<WorkTime> {
-            val workTimes = ArrayList<WorkTime>()
-            workTimes.add(WorkTime(Time(10, 0), Time(12, 0)))
-            workTimes.add(WorkTime(Time(13, 30), Time(17, 0)))
-            return workTimes
-        }
-
         @JvmStatic
         fun generateWorkDays(): ArrayList<WorkDay> {
             val workDays = ArrayList<WorkDay>()
-            workDays.add(WorkDay(Week.Monday, normalWorkTime()))
-            workDays.add(WorkDay(Week.Tuesday, normalWorkTime()))
-            workDays.add(WorkDay(Week.Wednesday, normalWorkTime()))
-            workDays.add(WorkDay(Week.Thursday, normalWorkTime()))
-            workDays.add(WorkDay(Week.Friday, shortWorkTime()))
-            workDays.add(WorkDay(Week.Saturday, shortWorkTime()))
+            workDays.add(WorkDay(Week.Monday, WorkTime(Time(9,0),Time(18,0))))
+            workDays.add(WorkDay(Week.Tuesday, WorkTime(Time(9,0),Time(18,0))))
+            workDays.add(WorkDay(Week.Wednesday, WorkTime(Time(9,0),Time(18,0))))
+            workDays.add(WorkDay(Week.Thursday, WorkTime(Time(9,0),Time(18,0))))
+            workDays.add(WorkDay(Week.Friday, WorkTime(Time(10,0),Time(17,0))))
+            workDays.add(WorkDay(Week.Saturday, WorkTime(Time(10,0),Time(17,0))))
             return workDays
         }
 
@@ -139,6 +131,20 @@ class DummyData {
                 generateWorkDays(),
                 generateDepartments()
 
+            )
+        }
+        @JvmStatic
+        fun dummyBookRecored():BookRecord{
+            var rnd = Random()
+            var ms = -946771200000L + Math.abs(rnd.nextLong()) % (70L * 365 * 24 * 60 * 60 * 1000)
+
+            var dt = Date(ms)
+
+            return BookRecord(
+                dt,
+                Time(15,0),
+                dummyHospital(),
+                generateStatus()
             )
         }
 
