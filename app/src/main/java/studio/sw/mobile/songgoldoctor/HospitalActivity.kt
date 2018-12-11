@@ -13,6 +13,7 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import java.lang.Exception
 import android.widget.GridView
+import com.google.android.gms.maps.model.MarkerOptions
 
 class HospitalActivity : Activity() {
     private var mMap: GoogleMap? = null
@@ -38,6 +39,7 @@ class HospitalActivity : Activity() {
             e.printStackTrace()
         }
         mMapView.getMapAsync(OnMapReadyCallBackHandler())
+        mMapView.isFocusable = false
         hospital = intent.getParcelableExtra(HOSPITAL_OBJECT)
 
         mHospitalNameView = findViewById(R.id.hospital_activity_hospital_name)
@@ -85,13 +87,13 @@ class HospitalActivity : Activity() {
         val params = gridView.layoutParams
         params.height = totalHeight
         gridView.layoutParams = params
-
     }
 
     inner class OnMapReadyCallBackHandler : OnMapReadyCallback {
         override fun onMapReady(map: GoogleMap?) {
             mCurrentLatLng = mDefaultLocation
             mMap = map
+            mMap?.addMarker(MarkerOptions().position(hospital.position).title(hospital.name))
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(hospital.position, 16f))
             mMapView.onResume()
         }

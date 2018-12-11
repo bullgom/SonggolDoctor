@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.google.android.gms.location.places.PlaceDetectionClient
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import java.lang.Exception
 
@@ -32,8 +34,7 @@ class MapFragment : Fragment() {
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mLocationManager: LocationManager
     private lateinit var mToCurrentLocationButton:FloatingActionButton
-    private lateinit var mPlacePicker: PlacePicker
-    private  var mLocations = ArrayList<Location>()
+    private var mHospitalList:ArrayList<Hospital> = ArrayList<Hospital>()
     private var mCurrentBestLocation: Location? = null
     private var mCurrentLatLng: LatLng? = null
     private lateinit var toFavoriteButton: ImageButton
@@ -49,6 +50,12 @@ class MapFragment : Fragment() {
         mMapView.onCreate(savedInstanceState)
         mMap?.isMyLocationEnabled = true
         mMap?.uiSettings?.isMyLocationButtonEnabled = true
+        mMap?.setOnMapClickListener {
+            mMap?.moveCamera(CameraUpdateFactory.newLatLng(it))
+            mHospitalList.clear()
+            test(10,it,0.0005)
+            drawCircles()
+        }
         try {
             MapsInitializer.initialize(activity?.applicationContext)
         } catch (e: Exception) {e.printStackTrace()}
@@ -58,15 +65,20 @@ class MapFragment : Fragment() {
         mToCurrentLocationButton.setOnClickListener {
             mCurrentBestLocation = getLastBestLocation()
             mCurrentLatLng = locationToLatLng(mCurrentBestLocation)
+            mHospitalList.clear()
             mMap?.moveCamera(CameraUpdateFactory.newLatLng(mCurrentLatLng))
+            test(10, mCurrentLatLng, 0.0005)
+            drawCircles()
         }
+        //Add dummy data
+        //TODO( Get data from server )
+
         //GeoDataClient provides access to Google's database of local place and business info
         mGeoDataClient = Places.getGeoDataClient(activity as Activity)
         //PlaceDetectionClient provides quick access to the device's current location
         mPlaceDetectionClient = Places.getPlaceDetectionClient(activity as Activity)
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity as Activity)
         mLocationManager = (activity as Activity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         toFavoriteButton = rootView.findViewById(R.id.toFavoriteButton)
         toFavoriteButton.setOnClickListener {
             val intent = Intent(activity, FavoriteListActivity::class.java)
@@ -94,6 +106,19 @@ class MapFragment : Fragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         mMapView.onLowMemory()
+    }
+
+    fun drawCircles(){
+        mMap?.clear()
+        for(hospital in mHospitalList){
+            mMap?.addCircle(
+                CircleOptions()
+                    .center(hospital.position)
+                    .radius(5.0)
+                    .fillColor(Color.WHITE)
+                    .strokeColor(Color.BLUE)
+            )
+        }
     }
 
     fun getLastBestLocation(): Location? {
@@ -124,12 +149,23 @@ class MapFragment : Fragment() {
         else LatLng(location.latitude, location.longitude)
     }
 
+
+    private fun test(count: Int, center:LatLng?, radius:Double){
+        repeat(count){
+            mHospitalList.add(DummyData.dummyHospitalWithRange(center, radius))
+        }
+    }
+
+
+
     inner class OnMapReadyCallBackHandler : OnMapReadyCallback {
         override fun onMapReady(map: GoogleMap?) {
             mCurrentLatLng = locationToLatLng(getLastBestLocation())
             if(mCurrentLatLng == null) mCurrentLatLng = mDefaultLocation
             mMap = map
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 16f))
+            test(10, mCurrentLatLng, 0.0005)
+            drawCircles()
         }
     }
 }

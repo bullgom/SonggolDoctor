@@ -77,6 +77,7 @@ class BookActivity:Activity(){
         bookButton.isEnabled = false
         bookButton.setOnClickListener {
             Toast.makeText(this, "Request sent",Toast.LENGTH_LONG).show()
+            finish()
         }
         //TODO( Send request to server )
     }

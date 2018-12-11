@@ -134,6 +134,26 @@ class DummyData {
             )
         }
         @JvmStatic
+        fun dummyHospitalWithRange(center:LatLng?, radius:Double):Hospital{
+            if (center != null){
+                val latlng = LatLng(DoubleRangeRandom(center.longitude-radius,center.longitude+radius),
+                    DoubleRangeRandom(center.latitude-radius, center.latitude+radius))
+                return Hospital(
+                    generateText(10),
+                    generateText(10),
+                    Random().ints(10).toString(),
+                    generateText(15),
+                    latlng,
+                    generateWorkDays(),
+                    generateDepartments()
+
+                )
+            }
+
+            return dummyHospital()
+
+        }
+        @JvmStatic
         fun dummyBookRecored():BookRecord{
             var rnd = Random()
             var ms = -946771200000L + Math.abs(rnd.nextLong()) % (70L * 365 * 24 * 60 * 60 * 1000)
