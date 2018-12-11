@@ -1,5 +1,6 @@
 package studio.sw.mobile.songgoldoctor
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.*
@@ -27,7 +28,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         signin.setOnClickListener{
-
+            val intent = Intent(this, DiagnosisActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -36,4 +36,10 @@
     <string name="book_status_declined">거절</string>
     <string name="book_status_none">미수락</string>
     <string name="book_see_reason"><u>사유확인</u></string>
+    <string name="etc"><u>외</u></string>
+    <string name="diagnosis_list_title"><u>진료기록</u></string>
+    <string name="info_list_title"><u>내 정보</u></string>
+    <string name="logout"><u>로그아웃</u></string>
+    <string name="fail"><u>x</u></string>
+    <string name="submit"><u>가입하기</u></string>
 </resources>

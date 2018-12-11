@@ -3,14 +3,13 @@ package studio.sw.mobile.songgoldoctor
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import kotlinx.android.synthetic.main.fragment_diagnosis.*
+import java.text.SimpleDateFormat
 
 /**
  * A simple [Fragment] subclass.
@@ -43,7 +42,7 @@ class DiagnosisFragment : Fragment() {
         diagList = ArrayList<Diagnosis>()
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_diagnosis, container, false)
-        listView = rootView.findViewById(R.id.diagnosisList)
+        listView = rootView.findViewById(R.id.diag_fragment_listView)
 
         test2()
         listView.adapter = DiagnosisAdapter(activity as Activity, diagList)
@@ -71,26 +70,38 @@ class DiagnosisFragment : Fragment() {
     class DiagnosisAdapter(private var activity: Activity, private var items: ArrayList<Diagnosis>) :
         ArrayAdapter<Diagnosis>(activity, 0, items) {
         private class ViewHolder{
-            lateinit var txtDate: TextView
-            lateinit var txtHospital: TextView
+            lateinit var name: TextView
+            lateinit var date: TextView
+            lateinit var drug: TextView
+            lateinit var howMany: TextView
+            lateinit var etc: TextView
         }
+
+        private val inflater:LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view: View?
             val viewHolder: ViewHolder
             if (convertView == null) {
-                val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                view = inflater.inflate(R.layout.diagnosis_list_item, null)
+                view = inflater.inflate(R.layout.fragment_diagnosis_item, null)
                 viewHolder = ViewHolder()
-                viewHolder.txtDate = view.findViewById(R.id.diagnosis_date)
-                viewHolder.txtHospital = view.findViewById(R.id.diagnosis_hospital)
-                viewHolder.txtDate.text = "${getItem(position).date.getMonth()}/${getItem(position).date.getDate()}"
-                viewHolder.txtHospital.text = getItem(position).hospital
+                val item = getItem(position)
+                viewHolder.name = view.findViewById(R.id.diag_fragment_hospital_name)
+                viewHolder.name.text = item.hospital
+                viewHolder.date = view.findViewById(R.id.diag_fragment_date)
+                val simpleDate = SimpleDateFormat("yyyy/MM/dd");
+                val date = simpleDate.format(item.date)
+                viewHolder.date.text = date
+                viewHolder.drug = view.findViewById(R.id.diag_fragment_drug)
+                viewHolder.drug.text = item.medicine
+                viewHolder.howMany = view.findViewById(R.id.diag_fragment_howMany)
+                viewHolder.howMany.text = item.howMany.toString()
+                viewHolder.etc = view.findViewById(R.id.diag_fragment_etc)
+                if (item.medicine.length > 1)
+                    viewHolder.etc.visibility = View.VISIBLE
             } else {
                 view = convertView
-                viewHolder = view.tag as ViewHolder
             }
-
             return view as View
         }
 

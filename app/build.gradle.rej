@@ -1,0 +1,7 @@
+diff a/app/build.gradle b/app/build.gradle	(rejected hunks)
+@@ -41,4 +41,5 @@
+     implementation 'com.google.android.gms:play-services-places:16.0.0'
+     implementation 'com.google.android.gms:play-services-location:16.0.0'
+     implementation 'com.android.support:gridlayout-v7:27.1.1'
++    implementation 'com.squareup:android-times-square:1.6.5@aar'
+ }
