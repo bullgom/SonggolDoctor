@@ -17,6 +17,7 @@
     <string name="commentAdvice"><u>의사 코멘트</u></string>
     <string name="diagnosisText"><u>진료 기록</u></string>
     <string name="actionDial"><u>전화 걸기</u></string>
+<<<<<<< HEAD
     <string name="main_activity_hospital">병원 찾기</string>
     <string name="main_activity_book">예약 내역</string>
     <string name="main_activity_diagnosis">검진 내역</string>
@@ -30,4 +31,12 @@
     <string name="book_status_declined">거절</string>
     <string name="book_status_none">미수락</string>
     <string name="book_see_reason"><u>사유확인</u></string>
+=======
+    <string name="login"><u>로그인</u></string>
+    <string name="ID"><u>아이디</u></string>
+    <string name="password"><u>비밀번호</u></string>
+    <string name="save"><u>저장</u></string>
+    <string name="signin"><u>회원가입</u></string>
+    <string name="songgolDoctor"><u>송골닥터</u></string>
+>>>>>>> origin/JSH
 </resources>
