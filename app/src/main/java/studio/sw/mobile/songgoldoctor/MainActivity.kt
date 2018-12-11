@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.view.WindowManager
 
 class MainActivity : AppCompatActivity() {
-    val permissionManager = PermissionManager(this)
+    private val permissionManager = PermissionManager(this)
     lateinit var tabLayout:TabLayout
     lateinit var viewPager: ViewPager
 
@@ -18,10 +19,10 @@ class MainActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
 
-        tabLayout.addTab(tabLayout.newTab().setText("Map"))
-        tabLayout.addTab(tabLayout.newTab().setText("Book"))
-        tabLayout.addTab(tabLayout.newTab().setText("Diagnosis"))
-        tabLayout.addTab(tabLayout.newTab().setText("Info"))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_hospital))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_book))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_diagnosis))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_myinfo))
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
         val pagerAdapter = PagerAdapter(supportFragmentManager,
@@ -33,6 +34,4 @@ class MainActivity : AppCompatActivity() {
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(TabLayoutOnTabSelectedListener(viewPager))
     }
-
-
 }

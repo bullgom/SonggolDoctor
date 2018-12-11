@@ -39,11 +39,8 @@ class DiagnosisFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (savedInstanceState != null) {
-            @Suppress("UNCHECKED_CAST")
-            diagList =
-                    savedInstanceState.getParcelable<BaseParcelable>(DiagnosisFragment.STATE_DIAGLIST).value as ArrayList<Diagnosis>
-        } else diagList = ArrayList<Diagnosis>()
+        super.onCreateView(inflater, container, savedInstanceState)
+        diagList = ArrayList<Diagnosis>()
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_diagnosis, container, false)
         listView = rootView.findViewById(R.id.diagnosisList)
@@ -87,8 +84,8 @@ class DiagnosisFragment : Fragment() {
                 viewHolder = ViewHolder()
                 viewHolder.txtDate = view.findViewById(R.id.diagnosis_date)
                 viewHolder.txtHospital = view.findViewById(R.id.diagnosis_hospital)
-                viewHolder.txtDate?.text = "${getItem(position).date.getMonth()}/${getItem(position).date.getDate()}"
-                viewHolder.txtHospital?.text = getItem(position).hospital
+                viewHolder.txtDate.text = "${getItem(position).date.getMonth()}/${getItem(position).date.getDate()}"
+                viewHolder.txtHospital.text = getItem(position).hospital
             } else {
                 view = convertView
                 viewHolder = view.tag as ViewHolder

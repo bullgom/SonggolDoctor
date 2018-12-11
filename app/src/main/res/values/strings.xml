@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">SonggolDoctor</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favorite_list_title">최근 및 즐겨찾기 병원</string>
     <string name="favorite_hospital">즐겨찾기</string>
     <string name="recent_hospital">최근</string>
-    <string name="book"><u>예약하기</u></string>
-    <string name="call"><u>전화하기</u></string>
+    <string name="book">예약하기</string>
+    <string name="call">전화하기</string>
+    <string name="book_u"><u>예약하기</u></string>
+    <string name="call_u"><u>전화하기</u></string>
+    <string name="hospitalName">병원이름</string>
+    <string name="hospitalAddress">특별택시 마구마구 포장도로 104</string>
+    <string name="worktime">진료시간</string>
+    <string name="weekday">예, 시, 요, 일</string>
+    <string name="worktimeexample">12:00 ~ 15:00</string>
     <string name="drugAdvice"><u>처방전</u></string>
     <string name="commentAdvice"><u>의사 코멘트</u></string>
     <string name="diagnosisText"><u>진료 기록</u></string>
@@ -18,4 +23,17 @@
     <string name="save"><u>저장</u></string>
     <string name="signin"><u>회원가입</u></string>
     <string name="songgolDoctor"><u>송골닥터</u></string>
+    <string name="main_activity_hospital">병원 찾기</string>
+    <string name="main_activity_book">예약 내역</string>
+    <string name="main_activity_diagnosis">검진 내역</string>
+    <string name="main_activity_myinfo">내 정보</string>
+    <string name="book_apply">예약 신청</string>
+    <string name="pick_date">날짜 선택</string>
+    <string name="pick_time">시간 선택</string>
+    <string name="default_string">DEFAULT</string>
+    <string name="book_status">예약 상태:</string>
+    <string name="book_status_accepted">수락</string>
+    <string name="book_status_declined">거절</string>
+    <string name="book_status_none">미수락</string>
+    <string name="book_see_reason"><u>사유확인</u></string>
 </resources>

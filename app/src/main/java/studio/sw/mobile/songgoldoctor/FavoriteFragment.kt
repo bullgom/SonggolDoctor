@@ -1,11 +1,9 @@
 package studio.sw.mobile.songgoldoctor
 
-import android.Manifest
 import android.app.Activity
 import android.support.v4.app.Fragment
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,10 +12,6 @@ import android.view.ViewGroup
 import android.widget.*
 
 class FavoriteFragment : Fragment() {
-    companion object {
-        @JvmStatic
-        private val STATE_FAVORLIST = "favorlist"
-    }
 
     private lateinit var listView: ListView
     private lateinit var rootView: View
@@ -29,7 +23,7 @@ class FavoriteFragment : Fragment() {
     ): View? {
         if (savedInstanceState != null) {
             @Suppress("UNCHECKED_CAST")
-            favorList = savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORLIST).value as ArrayList<Hospital>
+            favorList = savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORITE_LIST).value as ArrayList<Hospital>
         } else favorList = ArrayList<Hospital>()
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -39,6 +33,7 @@ class FavoriteFragment : Fragment() {
         listView.adapter = FavoriteListAdapter(activity as Activity, favorList)
         listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val intent = Intent(context, HospitalActivity::class.java)
+            intent.putExtra(HOSPITAL_OBJECT,favorList[position])
             startActivity(intent)
         }
         test()
@@ -46,15 +41,16 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putParcelable(STATE_FAVORLIST, BaseParcelable(favorList))
+        outState.putParcelable(STATE_FAVORITE_LIST, BaseParcelable(favorList))
         super.onSaveInstanceState(outState)
     }
 
     private fun test() {
         repeat(10){
-            favorList.add(DummyData.dummyHospital())
+            favorList.add(DummyData.BeautifulHospital())
         }
     }
+
 }
 
 class FavoriteListAdapter(
@@ -85,13 +81,14 @@ class FavoriteListAdapter(
         val view: View
 
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.favorite_list_item, null)
+            view = inflater.inflate(R.layout.favorite_list_item, null)
             viewHolder = ViewHolder()
             viewHolder.name = view.findViewById(R.id.hospital_name)
             viewHolder.name.text = (getItem(position) as Hospital).name
             viewHolder.book = view.findViewById(R.id.hostpital_book)
             viewHolder.book.setOnClickListener {
-                val intent = Intent(context, HospitalActivity::class.java)
+                val intent = Intent(context, BookActivity::class.java)
+                intent.putExtra(HOSPITAL_OBJECT,source[position])
                 context.startActivity(intent)
             }
             viewHolder.phone = view.findViewById(R.id.hospital_call)
@@ -107,6 +104,4 @@ class FavoriteListAdapter(
         }
         return view
     }
-
-
 }
