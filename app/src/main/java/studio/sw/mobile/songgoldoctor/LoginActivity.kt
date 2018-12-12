@@ -22,11 +22,11 @@ class LoginActivity : AppCompatActivity() {
         login = findViewById(R.id.buttonLogin)
         signin = findViewById(R.id.buttonSignin)
 
-        login.setOnClickListener{
+        login.setOnClickListener {
             intent
         }
 
-        signin.setOnClickListener{
+        signin.setOnClickListener {
 
         }
     }

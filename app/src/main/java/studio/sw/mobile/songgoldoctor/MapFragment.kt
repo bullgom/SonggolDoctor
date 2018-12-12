@@ -33,8 +33,8 @@ class MapFragment : Fragment() {
     private lateinit var mPlaceDetectionClient: PlaceDetectionClient
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mLocationManager: LocationManager
-    private lateinit var mToCurrentLocationButton:FloatingActionButton
-    private var mHospitalList:ArrayList<Hospital> = ArrayList<Hospital>()
+    private lateinit var mToCurrentLocationButton: FloatingActionButton
+    private var mHospitalList: ArrayList<Hospital> = ArrayList<Hospital>()
     private var mCurrentBestLocation: Location? = null
     private var mCurrentLatLng: LatLng? = null
     private lateinit var toFavoriteButton: ImageButton
@@ -53,12 +53,14 @@ class MapFragment : Fragment() {
         mMap?.setOnMapClickListener {
             mMap?.moveCamera(CameraUpdateFactory.newLatLng(it))
             mHospitalList.clear()
-            test(10,it,0.0005)
+            test(10, it, 0.0005)
             drawCircles()
         }
         try {
             MapsInitializer.initialize(activity?.applicationContext)
-        } catch (e: Exception) {e.printStackTrace()}
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         mMapView.getMapAsync(OnMapReadyCallBackHandler())
 
         mToCurrentLocationButton = rootView.findViewById(R.id.map_fragment_current_location)
@@ -108,9 +110,9 @@ class MapFragment : Fragment() {
         mMapView.onLowMemory()
     }
 
-    fun drawCircles(){
+    fun drawCircles() {
         mMap?.clear()
-        for(hospital in mHospitalList){
+        for (hospital in mHospitalList) {
             mMap?.addCircle(
                 CircleOptions()
                     .center(hospital.position)
@@ -150,18 +152,17 @@ class MapFragment : Fragment() {
     }
 
 
-    private fun test(count: Int, center:LatLng?, radius:Double){
-        repeat(count){
+    private fun test(count: Int, center: LatLng?, radius: Double) {
+        repeat(count) {
             mHospitalList.add(DummyData.dummyHospitalWithRange(center, radius))
         }
     }
 
 
-
     inner class OnMapReadyCallBackHandler : OnMapReadyCallback {
         override fun onMapReady(map: GoogleMap?) {
             mCurrentLatLng = locationToLatLng(getLastBestLocation())
-            if(mCurrentLatLng == null) mCurrentLatLng = mDefaultLocation
+            if (mCurrentLatLng == null) mCurrentLatLng = mDefaultLocation
             mMap = map
             mMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(mCurrentLatLng, 16f))
             test(10, mCurrentLatLng, 0.0005)

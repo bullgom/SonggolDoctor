@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageButton
 
-class FavoriteListActivity:AppCompatActivity(){
+class FavoriteListActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
     private lateinit var backButton: ImageButton
@@ -18,7 +18,7 @@ class FavoriteListActivity:AppCompatActivity(){
         viewPager = findViewById(R.id.favoriteViewPager)
         backButton = findViewById(R.id.book_activity_back_button)
 
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             finish()
         }
 

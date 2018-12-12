@@ -6,11 +6,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.httpGet
 import kotlinx.android.synthetic.main.fragment_diagnosis.*
+import org.json.JSONObject
+import java.lang.Exception
 
 /**
  * A simple [Fragment] subclass.
@@ -62,15 +68,27 @@ class DiagnosisFragment : Fragment() {
         }
     }
 
-    private fun test2()
-    {
+    private fun test2() {
+        var data: JSONObject
+        val URL = GET_DIAGNOSIS_RECORD + "1"
+        try {
+            doAsync {
+                FuelManager.instance.basePath = SERVER_IP
+                URL.httpGet().response { req, res, result ->
+                    data = JSONObject(result.get().toString(charset("UTF-8")))
+                    Log.println(Log.DEBUG, "communication_test", data.toString())
+                }
+            }.execute()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         diagList.add(DummyData.showDummyDiagnosis1())
         diagList.add(DummyData.showDummyDiagnosis2())
     }
 
     class DiagnosisAdapter(private var activity: Activity, private var items: ArrayList<Diagnosis>) :
         ArrayAdapter<Diagnosis>(activity, 0, items) {
-        private class ViewHolder{
+        private class ViewHolder {
             lateinit var txtDate: TextView
             lateinit var txtHospital: TextView
         }

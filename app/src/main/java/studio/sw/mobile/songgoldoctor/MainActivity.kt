@@ -8,7 +8,7 @@ import android.view.WindowManager
 
 class MainActivity : AppCompatActivity() {
     private val permissionManager = PermissionManager(this)
-    lateinit var tabLayout:TabLayout
+    lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +25,15 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.main_activity_myinfo))
         tabLayout.tabGravity = TabLayout.GRAVITY_FILL
 
-        val pagerAdapter = PagerAdapter(supportFragmentManager,
-            arrayListOf(MapFragment(),
-                        BookFragment(),
-                        DiagnosisFragment(),
-                        InfoFragment()))
+        val pagerAdapter = PagerAdapter(
+            supportFragmentManager,
+            arrayListOf(
+                MapFragment(),
+                BookFragment(),
+                DiagnosisFragment(),
+                InfoFragment()
+            )
+        )
         viewPager.adapter = pagerAdapter
         viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
         tabLayout.addOnTabSelectedListener(TabLayoutOnTabSelectedListener(viewPager))

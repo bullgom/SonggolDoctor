@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityCompat
  * PermissionManager class
  * Used to easily check permission and request permission
  */
-class PermissionManager(private val activity: Activity){
+class PermissionManager(private val activity: Activity) {
     companion object {
         @JvmStatic
         private val PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1
@@ -53,10 +53,11 @@ class PermissionManager(private val activity: Activity){
                 )
         }
     }
+
     /*  setup function
      *  Called on MainActivity onCreate to acquire permission at the start
      */
-    fun setup(){
+    fun setup() {
         checkLocationPermission(activity)
         checkCallPermission(activity)
     }

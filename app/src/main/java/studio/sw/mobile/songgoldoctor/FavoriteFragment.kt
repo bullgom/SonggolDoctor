@@ -23,7 +23,8 @@ class FavoriteFragment : Fragment() {
     ): View? {
         if (savedInstanceState != null) {
             @Suppress("UNCHECKED_CAST")
-            favorList = savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORITE_LIST).value as ArrayList<Hospital>
+            favorList =
+                    savedInstanceState.getParcelable<BaseParcelable>(STATE_FAVORITE_LIST).value as ArrayList<Hospital>
         } else favorList = ArrayList<Hospital>()
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -33,7 +34,7 @@ class FavoriteFragment : Fragment() {
         listView.adapter = FavoriteListAdapter(activity as Activity, favorList)
         listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val intent = Intent(context, HospitalActivity::class.java)
-            intent.putExtra(HOSPITAL_OBJECT,favorList[position])
+            intent.putExtra(HOSPITAL_OBJECT, favorList[position])
             startActivity(intent)
         }
         test()
@@ -46,7 +47,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun test() {
-        repeat(10){
+        repeat(10) {
             favorList.add(DummyData.BeautifulHospital())
         }
     }
@@ -88,7 +89,7 @@ class FavoriteListAdapter(
             viewHolder.book = view.findViewById(R.id.hostpital_book)
             viewHolder.book.setOnClickListener {
                 val intent = Intent(context, BookActivity::class.java)
-                intent.putExtra(HOSPITAL_OBJECT,source[position])
+                intent.putExtra(HOSPITAL_OBJECT, source[position])
                 context.startActivity(intent)
             }
             viewHolder.phone = view.findViewById(R.id.hospital_call)

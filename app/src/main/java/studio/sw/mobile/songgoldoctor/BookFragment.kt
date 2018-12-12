@@ -2,19 +2,16 @@ package studio.sw.mobile.songgoldoctor
 
 import android.app.Activity
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.ListAdapter
 import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class BookFragment : Fragment() {
@@ -37,8 +34,8 @@ class BookFragment : Fragment() {
         return rootView
     }
 
-    fun test(count : Int){
-        repeat(count){
+    fun test(count: Int) {
+        repeat(count) {
             list.add(DummyData.dummyBookRecored())
         }
     }
@@ -46,21 +43,21 @@ class BookFragment : Fragment() {
 
 class BookListAdapter(
     context: Activity,
-    private val source:ArrayList<BookRecord>
-    ):ArrayAdapter<BookRecord>(context, 0 ,source){
-    private class ViewHolder{
-        lateinit var name:TextView
-        lateinit var date:TextView
-        lateinit var status:TextView
-        lateinit var reason:TextView
+    private val source: ArrayList<BookRecord>
+) : ArrayAdapter<BookRecord>(context, 0, source) {
+    private class ViewHolder {
+        lateinit var name: TextView
+        lateinit var date: TextView
+        lateinit var status: TextView
+        lateinit var reason: TextView
     }
 
-    private val inflater:LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    override fun getCount():Int{
+    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    override fun getCount(): Int {
         return source.size
     }
 
-    override fun getItem(postion:Int):BookRecord{
+    override fun getItem(postion: Int): BookRecord {
         return source[postion]
     }
 
@@ -69,22 +66,22 @@ class BookListAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val viewHolder:ViewHolder
-        val view:View
+        val viewHolder: ViewHolder
+        val view: View
 
-        if(convertView == null){
-            view = inflater.inflate(R.layout.fragment_book_item,null)
+        if (convertView == null) {
+            view = inflater.inflate(R.layout.fragment_book_item, null)
             viewHolder = ViewHolder()
             val item = getItem(position)
             viewHolder.name = view.findViewById(R.id.book_fragment_hospital_name)
             viewHolder.name.text = item.hospital.name
             viewHolder.date = view.findViewById(R.id.book_fragment_date)
-            val simpleDate:SimpleDateFormat =  SimpleDateFormat("yyyy/MM/dd");
+            val simpleDate: SimpleDateFormat = SimpleDateFormat("yyyy/MM/dd");
             val date = simpleDate.format(item.date)
             viewHolder.date.text = date
             viewHolder.reason = view.findViewById(R.id.book_fragment_reason)
             viewHolder.status = view.findViewById(R.id.book_fragment_request_status)
-            when(getItem(position).status){
+            when (getItem(position).status) {
                 Status.None -> {
                     viewHolder.status.text = context.getString(R.string.book_status_none)
                     viewHolder.reason.visibility = View.INVISIBLE
@@ -98,7 +95,7 @@ class BookListAdapter(
                     viewHolder.reason.visibility = View.INVISIBLE
                 }
             }
-        }else
+        } else
             view = convertView
         return view
     }

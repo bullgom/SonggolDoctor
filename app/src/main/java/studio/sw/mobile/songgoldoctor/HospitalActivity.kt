@@ -24,8 +24,8 @@ class HospitalActivity : Activity() {
     private lateinit var mHospitalAddressView: TextView
     private lateinit var mGridLayout: GridView
     private lateinit var mGridLayoutAdapter: HospitalActivityTableAdapter
-    private lateinit var mBookButton:Button
-    private lateinit var mPhoneButton:Button
+    private lateinit var mBookButton: Button
+    private lateinit var mPhoneButton: Button
     private val mDefaultLocation = LatLng(37.597470317773286, 126.86515811830759)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +49,11 @@ class HospitalActivity : Activity() {
         mGridLayout = findViewById(R.id.hospital_activity_tablelayout)
         mGridLayoutAdapter = HospitalActivityTableAdapter(this, hospital.workDays)
         mGridLayout.adapter = mGridLayoutAdapter
-        setGridViewHeightBasedOnChildren(mGridLayout,2)
+        setGridViewHeightBasedOnChildren(mGridLayout, 2)
         mBookButton = findViewById(R.id.hospital_activity_book_button)
         mBookButton.setOnClickListener {
             val intent = Intent(this, BookActivity::class.java)
-            intent.putExtra(HOSPITAL_OBJECT,hospital)
+            intent.putExtra(HOSPITAL_OBJECT, hospital)
             startActivity(intent)
         }
         mPhoneButton = findViewById(R.id.hospital_activity_phone_button)
@@ -64,6 +64,7 @@ class HospitalActivity : Activity() {
             startActivity(intent)
         }
     }
+
     private fun setGridViewHeightBasedOnChildren(gridView: GridView, columns: Int) {
         val listAdapter = gridView.adapter
             ?: // pre-condition
@@ -77,7 +78,7 @@ class HospitalActivity : Activity() {
         listItem.measure(0, 0)
         totalHeight = listItem.measuredHeight
 
-        var x :Float
+        var x: Float
         if (items > columns) {
             x = (items / columns).toFloat()
             rows = (x + 1).toInt()
@@ -135,7 +136,7 @@ class HospitalActivityTableAdapter(
             view = inflater.inflate(R.layout.workday_item, null)
             viewHolder = ViewHolder()
             viewHolder.seperator = view.findViewById(R.id.workday_item_lineseperator)
-            if(workdays[position].dayOfWeek in arrayOf(Week.Saturday, Week.Sunday, Week.Holiday))
+            if (workdays[position].dayOfWeek in arrayOf(Week.Saturday, Week.Sunday, Week.Holiday))
                 viewHolder.seperator.setBackgroundColor(parent.resources.getColor(R.color.colorRed))
             else viewHolder.seperator.setBackgroundColor(parent.resources.getColor(R.color.colorBlue))
             viewHolder.weekDays = view.findViewById(R.id.workday_item_day)
@@ -147,12 +148,12 @@ class HospitalActivityTableAdapter(
         return view
     }
 
-    private fun workTimesToString(workTImes:ArrayList<WorkTime>):String{
-        var result:String = ""
+    private fun workTimesToString(workTImes: ArrayList<WorkTime>): String {
+        var result: String = ""
         val iterator = workTImes.listIterator()
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             result += iterator.next()
-            if(iterator.hasNext()) result += ", "
+            if (iterator.hasNext()) result += ", "
         }
         return result
     }
